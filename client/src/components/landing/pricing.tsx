@@ -9,7 +9,7 @@ const pricingPlans = [
     period: "/month",
     description: "Perfect for freelancers just getting started.",
     features: [
-      "3 pricing suggestions per month",
+      "5 pricing suggestions per month",
       "Basic market data",
       "Email support"
     ],
@@ -18,11 +18,11 @@ const pricingPlans = [
   },
   {
     name: "Pro",
-    price: "$19",
+    price: "$7.99",
     period: "/month",
     description: "Everything a growing freelance business needs.",
     features: [
-      "Unlimited pricing suggestions",
+      "30 pricing suggestions per month",
       "Advanced market insights",
       "Regional adjustments",
       "Priority support"
@@ -32,17 +32,17 @@ const pricingPlans = [
   },
   {
     name: "Business",
-    price: "$49",
+    price: "$19.99",
     period: "/month",
     description: "For established freelancers and small agencies.",
     features: [
-      "Everything in Pro",
+      "Unlimited pricing suggestions",
       "Client proposal generation",
       "Team member access",
       "API access",
       "Dedicated account manager"
     ],
-    cta: "Contact sales",
+    cta: "Get started",
     popular: false
   }
 ];

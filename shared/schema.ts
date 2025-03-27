@@ -17,15 +17,22 @@ export const priceSuggestions = pgTable("price_suggestions", {
   createdAt: text("created_at").notNull(),
 });
 
-// Keep the existing users table
+// Enhanced users table with subscription data
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   username: text("username").notNull().unique(),
+  email: text("email").notNull().unique(),
   password: text("password").notNull(),
+  subscriptionTier: text("subscription_tier").default("basic").notNull(),
+  suggestionsRemaining: integer("suggestions_remaining").default(5).notNull(),
+  stripeCustomerId: text("stripe_customer_id"),
+  stripeSubscriptionId: text("stripe_subscription_id"),
+  createdAt: text("created_at").notNull(),
 });
 
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
+  email: true,
   password: true,
 });
 
