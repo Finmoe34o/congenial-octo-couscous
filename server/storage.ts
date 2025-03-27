@@ -24,7 +24,7 @@ export interface IStorage {
   
   // Price suggestions
   getPriceSuggestions(userId: number): Promise<PriceSuggestion[]>;
-  createPriceSuggestion(suggestion: InsertPriceSuggestion): Promise<PriceSuggestion>;
+  createPriceSuggestion(suggestion: any): Promise<PriceSuggestion>;
 }
 
 // PostgreSQL Database Storage Implementation
@@ -130,7 +130,7 @@ export class DatabaseStorage implements IStorage {
       .orderBy(priceSuggestions.createdAt);
   }
   
-  async createPriceSuggestion(suggestion: InsertPriceSuggestion): Promise<PriceSuggestion> {
+  async createPriceSuggestion(suggestion: any): Promise<PriceSuggestion> {
     // Add current timestamp
     const suggestionWithTimestamp = {
       ...suggestion,

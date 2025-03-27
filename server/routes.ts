@@ -71,13 +71,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const recommendedPrice = `$${Math.floor(recommendedHourlyRate)}/hr`;
         const premiumPrice = `$${Math.floor(recommendedHourlyRate * 1.25)}/hr`;
         
-        // Store the suggestion in the database
-        const priceSuggestion = await storage.createPriceSuggestion({
+        // Store the suggestion in the database with all fields
+        const suggestionData = {
           ...validatedData,
+          userId: req.user?.id || 0, // Ensure userId is explicitly set
           minPrice,
           recommendedPrice,
           premiumPrice
-        });
+        };
+        
+        const priceSuggestion = await storage.createPriceSuggestion(suggestionData);
         
         // Decrement suggestions remaining for this user
         if (req.user && req.user.subscriptionTier !== "business") {
@@ -88,8 +91,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         res.status(201).json(priceSuggestion);
       } catch (error) {
         if (error instanceof z.ZodError) {
+          console.error("Validation error:", error.errors);
           res.status(400).json({ error: error.errors });
         } else {
+          console.error("Error creating pricing suggestion:", error);
           next(error);
         }
       }

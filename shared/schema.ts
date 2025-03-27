@@ -40,6 +40,9 @@ export const insertUserSchema = createInsertSchema(users).pick({
 export const insertPriceSuggestionSchema = createInsertSchema(priceSuggestions).omit({
   id: true,
   createdAt: true,
+  minPrice: true,
+  recommendedPrice: true,
+  premiumPrice: true,
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
