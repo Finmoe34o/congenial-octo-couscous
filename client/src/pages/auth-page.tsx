@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Redirect } from "wouter";
+import { Redirect, Link } from "wouter";
 import { useAuth } from "@/hooks/use-auth";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -65,9 +65,19 @@ export default function AuthPage() {
       {/* Left side (form) */}
       <div className="w-full md:w-1/2 flex flex-col justify-center p-8">
         <div className="max-w-md w-full mx-auto">
+          <div className="flex justify-between items-center mb-8">
+            <Link href="/">
+              <Button variant="ghost" size="sm" className="flex items-center gap-1 text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to Home
+              </Button>
+            </Link>
+          </div>
           <div className="text-center mb-8">
             <h2 className="text-3xl font-extrabold text-gray-900">
-              Welcome to FreelancerPrice
+              Welcome to PriceProAI
             </h2>
             <p className="mt-2 text-sm text-gray-600">
               Your AI-powered pricing assistant for freelancers
