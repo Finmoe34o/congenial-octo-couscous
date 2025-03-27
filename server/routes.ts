@@ -9,9 +9,7 @@ import Stripe from "stripe";
 // Create Stripe instance if key is available
 let stripe: Stripe | undefined;
 if (process.env.STRIPE_SECRET_KEY) {
-  stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-    apiVersion: "2023-10-16",
-  });
+  stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 }
 
 // Middleware to check if user is authenticated
@@ -64,7 +62,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const baseRate = getBaseRate(validatedData.skillType);
         const experienceMultiplier = getExperienceMultiplier(validatedData.experienceLevel);
         const scopeMultiplier = getScopeMultiplier(validatedData.projectScope);
-        const locationFactor = getLocationFactor(validatedData.location);
+        const locationFactor = getLocationFactor(validatedData.location || undefined);
         
         const recommendedHourlyRate = baseRate * experienceMultiplier * scopeMultiplier * locationFactor;
         

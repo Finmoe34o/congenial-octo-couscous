@@ -92,7 +92,7 @@ export default function Pricing() {
                 </ul>
               </div>
 
-              <Link href="/pricing-suggestion">
+              <Link href="/auth">
                 <Button 
                   className={`mt-8 w-full py-2 text-sm font-semibold ${
                     plan.popular 

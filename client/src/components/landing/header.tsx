@@ -25,12 +25,16 @@ export default function Header() {
             <a href="#pricing" className="text-gray-600 hover:text-primary transition duration-150">Pricing</a>
           </nav>
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" className="text-gray-600 hover:text-primary">
-              Sign in
-            </Button>
-            <Button variant="outline" className="bg-primary-50 text-primary border-primary-200 hover:bg-primary-100">
-              Sign up
-            </Button>
+            <Link href="/auth">
+              <Button variant="ghost" className="text-gray-600 hover:text-primary">
+                Sign in
+              </Button>
+            </Link>
+            <Link href="/auth">
+              <Button variant="outline" className="bg-primary-50 text-primary border-primary-200 hover:bg-primary-100">
+                Sign up
+              </Button>
+            </Link>
           </div>
           <button
             type="button"
@@ -75,12 +79,16 @@ export default function Header() {
             Pricing
           </a>
           <div className="pt-4 pb-3 border-t border-gray-200">
-            <Button variant="ghost" className="w-full justify-start px-3 py-2 text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50">
-              Sign in
-            </Button>
-            <Button variant="outline" className="w-full justify-start px-3 py-2 text-base font-medium text-primary bg-primary-50 hover:bg-primary-100 mt-1">
-              Sign up
-            </Button>
+            <Link href="/auth" className="block w-full">
+              <Button variant="ghost" className="w-full justify-start px-3 py-2 text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50">
+                Sign in
+              </Button>
+            </Link>
+            <Link href="/auth" className="block w-full">
+              <Button variant="outline" className="w-full justify-start px-3 py-2 text-base font-medium text-primary bg-primary-50 hover:bg-primary-100 mt-1">
+                Sign up
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
