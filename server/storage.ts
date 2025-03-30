@@ -1,15 +1,9 @@
-import { users, priceSuggestions, type User, type InsertUser, type PriceSuggestion, type InsertPriceSuggestion } from "@shared/schema";
-import { db } from "./db";
+import { users, priceSuggestions, type User, type InsertUser, type PriceSuggestion } from "@shared/schema";
+import { db, supabase } from "./db";
 import { eq } from "drizzle-orm";
-import session from "express-session";
-import connectPg from "connect-pg-simple";
-import { pool } from "./db";
 
 // Enhanced interface with new methods for user management and pricing
 export interface IStorage {
-  // Session store for auth
-  sessionStore: session.Store;
-  
   // User management
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
@@ -27,18 +21,8 @@ export interface IStorage {
   createPriceSuggestion(suggestion: any): Promise<PriceSuggestion>;
 }
 
-// PostgreSQL Database Storage Implementation
-export class DatabaseStorage implements IStorage {
-  sessionStore: session.Store;
-  
-  constructor() {
-    const PostgresSessionStore = connectPg(session);
-    this.sessionStore = new PostgresSessionStore({ 
-      pool, 
-      createTableIfMissing: true 
-    });
-  }
-
+// Supabase Database Storage Implementation
+export class SupabaseStorage implements IStorage {
   async getUser(id: number): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.id, id));
     return user;
@@ -146,5 +130,5 @@ export class DatabaseStorage implements IStorage {
   }
 }
 
-// Switch from MemStorage to DatabaseStorage
-export const storage = new DatabaseStorage();
+// Create a storage instance
+export const storage = new SupabaseStorage();

@@ -34,6 +34,8 @@ export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   email: true,
   password: true,
+  subscriptionTier: true,
+  suggestionsRemaining: true,
 });
 
 // Create insert schema for price suggestions

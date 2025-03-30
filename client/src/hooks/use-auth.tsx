@@ -1,28 +1,45 @@
-import { createContext, ReactNode, useContext } from "react";
+import { createContext, ReactNode, useContext, useEffect } from "react";
 import {
   useQuery,
   useMutation,
   UseMutationResult,
 } from "@tanstack/react-query";
 import { User, InsertUser } from "@shared/schema";
-import { getQueryFn, apiRequest, queryClient } from "../lib/queryClient";
+import { getQueryFn, apiRequest, queryClient, setAuthToken, getAuthToken, removeAuthToken } from "../lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
 type AuthContextType = {
   user: User | null;
   isLoading: boolean;
   error: Error | null;
-  loginMutation: UseMutationResult<User, Error, LoginData>;
+  loginMutation: UseMutationResult<AuthResponse, Error, LoginData>;
   logoutMutation: UseMutationResult<void, Error, void>;
-  registerMutation: UseMutationResult<User, Error, InsertUser>;
+  registerMutation: UseMutationResult<AuthResponse, Error, InsertUser>;
 };
 
-type LoginData = Pick<InsertUser, "username" | "password">;
+type LoginData = {
+  email: string;
+  password: string;
+};
+
+type AuthResponse = User & {
+  token: string;
+};
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const { toast } = useToast();
+  
+  // Initialize with token from localStorage if available
+  useEffect(() => {
+    const token = getAuthToken();
+    if (token) {
+      // Token exists, we'll load the user data
+      queryClient.invalidateQueries({ queryKey: ["/api/user"] });
+    }
+  }, []);
+  
   const {
     data: user,
     error,
@@ -35,13 +52,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const loginMutation = useMutation({
     mutationFn: async (credentials: LoginData) => {
       const res = await apiRequest("POST", "/api/login", credentials);
-      return await res.json();
+      const data = await res.json();
+      
+      // Store the JWT token
+      if (data.token) {
+        setAuthToken(data.token);
+      }
+      
+      return data;
     },
-    onSuccess: (user: User) => {
-      queryClient.setQueryData(["/api/user"], user);
+    onSuccess: (data: AuthResponse) => {
+      // Remove the token from the user object before storing in queryClient
+      const { token, ...userWithoutToken } = data;
+      queryClient.setQueryData(["/api/user"], userWithoutToken);
+      
       toast({
         title: "Login successful",
-        description: `Welcome back, ${user.username}!`,
+        description: `Welcome back, ${data.username}!`,
       });
     },
     onError: (error: Error) => {
@@ -56,13 +83,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const registerMutation = useMutation({
     mutationFn: async (credentials: InsertUser) => {
       const res = await apiRequest("POST", "/api/register", credentials);
-      return await res.json();
+      const data = await res.json();
+      
+      // Store the JWT token
+      if (data.token) {
+        setAuthToken(data.token);
+      }
+      
+      return data;
     },
-    onSuccess: (user: User) => {
-      queryClient.setQueryData(["/api/user"], user);
+    onSuccess: (data: AuthResponse) => {
+      // Remove the token from the user object before storing in queryClient
+      const { token, ...userWithoutToken } = data;
+      queryClient.setQueryData(["/api/user"], userWithoutToken);
+      
       toast({
         title: "Registration successful",
-        description: `Welcome, ${user.username}!`,
+        description: `Welcome, ${data.username}!`,
       });
     },
     onError: (error: Error) => {
@@ -77,6 +114,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logoutMutation = useMutation({
     mutationFn: async () => {
       await apiRequest("POST", "/api/logout");
+      // Remove token from localStorage
+      removeAuthToken();
     },
     onSuccess: () => {
       queryClient.setQueryData(["/api/user"], null);
