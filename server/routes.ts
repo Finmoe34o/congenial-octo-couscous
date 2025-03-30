@@ -14,7 +14,7 @@ if (process.env.STRIPE_SECRET_KEY) {
 
 // Middleware to check if user is authenticated
 function ensureAuthenticated(req: Request, res: Response, next: NextFunction) {
-  if (req.isAuthenticated()) {
+  if (req.user) {
     return next();
   }
   res.status(401).json({ error: "You need to be logged in to access this resource" });
