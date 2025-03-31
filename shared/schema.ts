@@ -36,6 +36,10 @@ export const users = pgTable("users", {
   stripeCustomerId: text("stripe_customer_id"),
   stripeSubscriptionId: text("stripe_subscription_id"),
   createdAt: text("created_at").notNull(),
+  // Usage metrics
+  totalSuggestionsUsed: integer("total_suggestions_used").default(0),
+  aiSuggestionsUsed: integer("ai_suggestions_used").default(0),
+  lastLoginAt: text("last_login_at"),
 });
 
 export const insertUserSchema = createInsertSchema(users).pick({
@@ -53,6 +57,13 @@ export const insertPriceSuggestionSchema = createInsertSchema(priceSuggestions).
   minPrice: true,
   recommendedPrice: true,
   premiumPrice: true,
+  aiEnhanced: true,
+  aiRationale: true,
+  marketFactors: true,
+  confidenceScore: true,
+  projectStatus: true,
+  actualRate: true,
+  clientFeedback: true,
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
