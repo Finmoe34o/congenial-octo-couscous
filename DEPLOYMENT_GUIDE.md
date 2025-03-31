@@ -164,6 +164,7 @@ For testing Stripe webhooks in a local development environment:
 - Ensure that the catch-all route in `/api/[...path].ts` is properly handling all API requests
 - Monitor Vercel's Function Logs for timeout or memory limit errors
 - For database connection issues in serverless functions, verify your DATABASE_URL includes proper SSL settings required by Supabase
+- If you see module import errors like `Cannot find module '/var/task/server/storage'`, make sure you're importing from the local `./_lib/storage` module within API files, not from `../server/storage`
 
 ### Stripe Webhook Issues
 

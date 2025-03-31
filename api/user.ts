@@ -1,6 +1,6 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import jwt from 'jsonwebtoken';
-import { storage } from '../server/storage';
+import { storage } from './_lib/storage';
 
 // JWT verification helper
 const verifyToken = (token: string): { userId: number } | null => {

@@ -1,6 +1,6 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import jwt from 'jsonwebtoken';
-import { storage } from '../server/storage';
+import { storage } from './_lib/storage';
 import { scrypt, randomBytes } from 'crypto';
 import { promisify } from 'util';
 import { insertUserSchema } from '../shared/schema';
