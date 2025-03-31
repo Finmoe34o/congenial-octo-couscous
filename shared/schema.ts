@@ -15,14 +15,6 @@ export const priceSuggestions = pgTable("price_suggestions", {
   recommendedPrice: text("recommended_price").notNull(),
   premiumPrice: text("premium_price").notNull(),
   createdAt: text("created_at").notNull(),
-  // New AI-related fields
-  aiEnhanced: boolean("ai_enhanced").default(false),
-  aiRationale: text("ai_rationale"),
-  marketFactors: jsonb("market_factors"),
-  confidenceScore: integer("confidence_score"),
-  projectStatus: text("project_status").default("suggestion"), // suggestion, accepted, rejected, completed
-  actualRate: text("actual_rate"), // What rate was actually charged if project was accepted
-  clientFeedback: integer("client_feedback"), // 1-5 rating if available
 });
 
 // Enhanced users table with subscription data
@@ -36,19 +28,23 @@ export const users = pgTable("users", {
   stripeCustomerId: text("stripe_customer_id"),
   stripeSubscriptionId: text("stripe_subscription_id"),
   createdAt: text("created_at").notNull(),
-  // Usage metrics
-  totalSuggestionsUsed: integer("total_suggestions_used").default(0),
-  aiSuggestionsUsed: integer("ai_suggestions_used").default(0),
-  lastLoginAt: text("last_login_at"),
 });
 
-export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
-  email: true,
-  password: true,
-  subscriptionTier: true,
-  suggestionsRemaining: true,
-});
+export const insertUserSchema = createInsertSchema(users)
+  .pick({
+    username: true,
+    email: true,
+    password: true,
+    subscriptionTier: true,
+    suggestionsRemaining: true,
+    createdAt: true,
+  })
+  .extend({
+    // Simpler email validation that accepts more formats
+    email: z.string().min(5).max(255).refine((val) => val.includes('@'), {
+      message: "Email must contain '@'",
+    }),
+  });
 
 // Create insert schema for price suggestions
 export const insertPriceSuggestionSchema = createInsertSchema(priceSuggestions).omit({
@@ -57,13 +53,6 @@ export const insertPriceSuggestionSchema = createInsertSchema(priceSuggestions).
   minPrice: true,
   recommendedPrice: true,
   premiumPrice: true,
-  aiEnhanced: true,
-  aiRationale: true,
-  marketFactors: true,
-  confidenceScore: true,
-  projectStatus: true,
-  actualRate: true,
-  clientFeedback: true,
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;

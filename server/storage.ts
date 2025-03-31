@@ -1,5 +1,5 @@
 import { users, priceSuggestions, type User, type InsertUser, type PriceSuggestion } from "@shared/schema";
-import { db, supabase } from "./db";
+import { db } from "./db";
 import { eq } from "drizzle-orm";
 
 // Enhanced interface with new methods for user management and pricing
@@ -39,15 +39,15 @@ export class SupabaseStorage implements IStorage {
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    // Add current timestamp
-    const userWithTimestamp = {
-      ...insertUser,
-      createdAt: new Date().toISOString()
-    };
+    // Add current timestamp if not provided
+    const now = new Date().toISOString();
     
     const [user] = await db
       .insert(users)
-      .values(userWithTimestamp)
+      .values({
+        ...insertUser,
+        createdAt: now
+      })
       .returning();
     
     return user;
