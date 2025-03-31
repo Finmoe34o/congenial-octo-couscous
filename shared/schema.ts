@@ -1,4 +1,4 @@
-import { pgTable, text, serial, integer, boolean } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, jsonb, timestamp } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -15,6 +15,14 @@ export const priceSuggestions = pgTable("price_suggestions", {
   recommendedPrice: text("recommended_price").notNull(),
   premiumPrice: text("premium_price").notNull(),
   createdAt: text("created_at").notNull(),
+  // New AI-related fields
+  aiEnhanced: boolean("ai_enhanced").default(false),
+  aiRationale: text("ai_rationale"),
+  marketFactors: jsonb("market_factors"),
+  confidenceScore: integer("confidence_score"),
+  projectStatus: text("project_status").default("suggestion"), // suggestion, accepted, rejected, completed
+  actualRate: text("actual_rate"), // What rate was actually charged if project was accepted
+  clientFeedback: integer("client_feedback"), // 1-5 rating if available
 });
 
 // Enhanced users table with subscription data
