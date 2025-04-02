@@ -1,39 +1,37 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { storage } from '../storage';
-import jwt from 'jsonwebtoken';
+import { supabase } from './db';
+import { storage } from './storage';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  if (req.method !== 'GET') {
-    return res.status(405).json({ error: "Method not allowed" });
+  // Extract token from Authorization header
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ error: 'Unauthorized' });
   }
   
+  const token = authHeader.split(' ')[1];
+  
   try {
-    // Authentication check
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({ error: "Not authenticated" });
+    // Verify JWT token
+    const { data: { user }, error } = await supabase.auth.getUser(token);
+    
+    if (error || !user) {
+      return res.status(401).json({ error: 'Invalid token' });
     }
     
-    // Extract and verify token
-    const token = authHeader.split(' ')[1];
-    if (!process.env.JWT_SECRET) {
-      return res.status(500).json({ error: "Server configuration error" });
+    // Get the user ID from the database
+    const appUser = await storage.getUserByEmail(user.email);
+    
+    if (!appUser) {
+      return res.status(404).json({ error: 'User not found' });
     }
     
-    const payload = jwt.verify(token, process.env.JWT_SECRET) as { userId: number };
+    // Get pricing suggestions for the user
+    const suggestions = await storage.getPriceSuggestions(appUser.id);
     
-    // Get user data
-    const user = await storage.getUser(payload.userId);
-    if (!user) {
-      return res.status(401).json({ error: "User not found" });
-    }
-    
-    // Get user's pricing suggestions
-    const suggestions = await storage.getPriceSuggestions(user.id);
-    
-    res.status(200).json(suggestions);
+    return res.status(200).json(suggestions);
   } catch (error) {
-    console.error("Error in /api/pricing-suggestions:", error);
-    res.status(500).json({ error: "Failed to fetch pricing suggestions" });
+    console.error('Error fetching pricing suggestions:', error);
+    return res.status(500).json({ error: 'Failed to fetch pricing suggestions' });
   }
 }

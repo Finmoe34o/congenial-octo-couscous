@@ -13,7 +13,8 @@ export default function Home() {
           <nav className="hidden md:flex space-x-8">
             <Link href="/" className="nav-link font-medium">Home</Link>
             <Link href="/pricing" className="nav-link font-medium">Pricing</Link>
-            <Link href="/about" className="nav-link font-medium">About</Link>
+            <Link href="/pricing-suggestion" className="nav-link font-medium">Calculator</Link>
+            <Link href="/dashboard" className="nav-link font-medium">Dashboard</Link>
           </nav>
           <div className="flex space-x-4">
             <Link href="/auth" className="button-secondary">Sign In</Link>
