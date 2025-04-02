@@ -46,14 +46,23 @@ export async function POST(request: Request) {
     }
     
     // Create a JWT
+    // Remove password from user object
+    const { password: _, ...userWithoutPassword } = user;
+    
     const token = await signJWT({
       userId: user.id,
       username: user.username,
       email: user.email,
     });
     
+    // Create response with user data and token
+    const response = NextResponse.json({
+      ...userWithoutPassword,
+      token,
+    });
+    
     // Set the cookie
-    cookies().set({
+    response.cookies.set({
       name: "authToken",
       value: token,
       httpOnly: true,
@@ -63,13 +72,7 @@ export async function POST(request: Request) {
       maxAge: 60 * 60 * 24 * 7, // 7 days
     });
     
-    // Return the user (without the password) and token
-    const { password: _, ...userWithoutPassword } = user;
-    
-    return NextResponse.json({
-      ...userWithoutPassword,
-      token,
-    });
+    return response;
   } catch (error) {
     console.error("Login error:", error);
     return NextResponse.json(

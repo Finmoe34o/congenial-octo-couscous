@@ -67,8 +67,17 @@ export async function POST(request: Request) {
       email: user.email,
     });
     
+    // Return the user (without the password) and token
+    const { password: _, ...userWithoutPassword } = user;
+    
+    // Create response with user data and token
+    const response = NextResponse.json({
+      ...userWithoutPassword,
+      token,
+    });
+    
     // Set the cookie
-    cookies().set({
+    response.cookies.set({
       name: "authToken",
       value: token,
       httpOnly: true,
@@ -78,13 +87,7 @@ export async function POST(request: Request) {
       maxAge: 60 * 60 * 24 * 7, // 7 days
     });
     
-    // Return the user (without the password) and token
-    const { password: _, ...userWithoutPassword } = user;
-    
-    return NextResponse.json({
-      ...userWithoutPassword,
-      token,
-    });
+    return response;
   } catch (error) {
     console.error("Registration error:", error);
     return NextResponse.json(
