@@ -1,130 +1,96 @@
-# Freelancer Pricing Suggestion App
+# SkillPay - Freelancer Pricing Calculator
 
-A sophisticated web application powered by AI, enabling precise project cost estimation through intelligent analysis and user-friendly interfaces.
+SkillPay is an intelligent platform that helps freelancers and consultants determine optimal pricing for their services through sophisticated project cost estimation and personalized insights.
 
-## Key Technologies
+![SkillPay Platform](generated-icon.png)
 
-- Supabase authentication
-- JWT-based security
-- AI-driven pricing recommendations
-- Responsive web design
-- Subscription-based access model
+## Features
 
-## Deploying to Vercel
+- **Smart Pricing Calculator**: Generate precise pricing recommendations based on skill type, experience level, project scope, location, and target market.
+- **Tiered Subscription Model**: Free basic plan with premium tiers offering additional features.
+- **User Dashboard**: Track pricing history and view trends over time.
+- **Secure Authentication**: Robust user account management with JWT.
+- **Responsive Design**: Fully optimized for mobile, tablet, and desktop.
 
-### Prerequisites
+## Technology Stack
 
-1. A Vercel account
-2. A Supabase account
-3. A Stripe account (for payment processing)
+- **Frontend**: Next.js 14 with TypeScript, Tailwind CSS, and shadcn/ui
+- **Backend**: Next.js API Routes with Express.js server option
+- **Database**: PostgreSQL managed via Supabase
+- **Authentication**: Custom JWT implementation with secure password hashing
+- **Payments**: Stripe integration for subscription management
+- **ORM**: Drizzle for type-safe database queries
 
-### Step 1: Set Up Environment Variables
+## Local Development
 
-Add the following environment variables in your Vercel project settings:
+1. Clone the repository
+2. Set up environment variables (see [Environment Variables](#environment-variables))
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+## Environment Variables
+
+Create a `.env` file in the root directory with the following variables:
 
 ```
-DATABASE_URL=your_postgres_connection_string
-JWT_SECRET=your_jwt_secret_key
+DATABASE_URL=your_postgresql_connection_string
 SUPABASE_URL=your_supabase_project_url
 SUPABASE_ANON_KEY=your_supabase_anon_key
+JWT_SECRET=your_jwt_secret_key
 STRIPE_SECRET_KEY=your_stripe_secret_key
 VITE_STRIPE_PUBLIC_KEY=your_stripe_publishable_key
 ```
 
-### Step 2: Deploy to Vercel
+## Pricing Formula
 
-1. Push your project to a GitHub repository
-2. Connect the repository to Vercel
-3. Configure the build settings in Vercel:
-   - Framework Preset: Vite
-   - Build Command: `npm run build`
-   - Output Directory: `dist/public`
-   - Install Command: `npm install`
+The pricing calculator uses a sophisticated algorithm based on:
 
-### Step 3: Serverless Functions Architecture
+1. **Base Rate**: Determined by skill type (Programming, Design, Writing, etc.)
+2. **Experience Multiplier**: Applies a factor based on experience level
+3. **Project Scope Adjustment**: Modifies pricing based on project complexity
+4. **Location Factor**: Adjusts for regional market differences
+5. **Target Market Consideration**: Optional adjustment for enterprise clients
 
-This application uses a hybrid architecture designed to work seamlessly in both development and production environments:
+The resulting calculation provides three pricing tiers:
+- **Minimum**: Base calculation at 80% (starting point)
+- **Recommended**: Full calculated rate (optimal balance)
+- **Premium**: Premium rate at 125-130% (for premium service)
 
-1. **Development Mode**: The application runs with Express.js as a traditional server.
-2. **Production Mode**: The application transforms into serverless functions on Vercel.
+## Deployment
 
-The key components that enable this architecture:
+See our detailed deployment guides:
+- [Replit Deployment Guide](DEPLOYMENT_GUIDE.md)
+- [Vercel Deployment Guide](VERCEL_DEPLOYMENT_GUIDE.md)
 
-- **API Directory**: The `/api` directory contains individual serverless function files that work directly with Vercel's deployment platform.
-- **Catch-all Route**: The `/api/[...path].ts` file acts as a router that forwards all API requests to our Express application logic.
-- **Individual Endpoints**: Standalone API endpoints (like `/api/login.ts`, `/api/user.ts`) provide direct serverless implementations.
+## Subscription Tiers
 
-This design provides flexibility and optimal performance in both environments without requiring code changes between development and deployment.
+- **Basic (Free)**
+  - 3 pricing suggestions per month
+  - Basic pricing factors
+  - Standard calculation
 
-### Step 4: Verify the Deployment
+- **Pro ($9.99/month)**
+  - 15 pricing suggestions per month
+  - Advanced pricing factors
+  - Historical suggestion tracking
 
-After deployment:
-1. Test authentication flows
-2. Verify API connections
-3. Test Stripe payment processing
-4. Check that pricing suggestions are generating correctly
+- **Business ($29.99/month)**
+  - Unlimited pricing suggestions
+  - Premium pricing factors
+  - Advanced analytics and trends
+  - Priority support
 
-## Folder Structure
+## License
 
-```
-├── api/                  # Vercel serverless functions
-│   ├── [...path].ts      # Catch-all route handler
-│   ├── login.ts          # Authentication endpoint
-│   ├── user.ts           # User data endpoint
-│   ├── register.ts       # User registration endpoint
-│   ├── pricing-suggestion.ts # Pricing calculation endpoint
-│   ├── create-pro-subscription.ts # Pro tier payment endpoint
-│   ├── create-business-subscription.ts # Business tier payment endpoint
-│   ├── stripe-webhook.ts # Webhook handler for subscription events
-├── client/               # Frontend React application
-│   ├── src/
-│   │   ├── components/   # React components
-│   │   ├── hooks/        # Custom React hooks (including useAuth)
-│   │   ├── lib/          # Utility functions and API client
-│   │   ├── pages/        # Page components
-├── server/               # Backend code for development
-│   ├── api/              # Development API endpoints
-│   ├── auth.ts           # Authentication logic
-│   ├── db.ts             # Database connection (Supabase)
-│   ├── storage.ts        # Data access layer
-│   ├── routes.ts         # Express route definitions
-├── shared/               # Shared code
-│   ├── schema.ts         # Database schema and types
-├── vercel.json           # Vercel configuration
-```
+This project is proprietary software. All rights reserved.
 
-## Development
+## Support
 
-```bash
-# Install dependencies
-npm install
-
-# Run development server
-npm run dev
-```
-
-## Project Features
-
-- User authentication and registration
-- Pricing suggestion generator
-- Subscription tiers (Free, Pro, Business)
-- User profile and history of pricing suggestions
-- Responsive UI
-- Automated subscription management via Stripe webhooks
-
-## Subscription Management
-
-The application uses Stripe for payment processing and subscription management with three tiers:
-
-1. **Free Tier** - 5 pricing suggestions per month
-2. **Pro Tier** - $7.99/month for 30 pricing suggestions per month
-3. **Business Tier** - $19.99/month for unlimited pricing suggestions
-
-Subscription status and suggestion limits are automatically updated through Stripe webhooks, which listen for the following events:
-- `customer.subscription.created`
-- `customer.subscription.updated`
-- `customer.subscription.deleted`
-- `invoice.payment_succeeded`
-- `invoice.payment_failed`
-
-For detailed setup instructions, see the [Deployment Guide](DEPLOYMENT_GUIDE.md).
+For support, contact us at support@skillpay.example.com

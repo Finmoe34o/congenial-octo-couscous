@@ -1,13 +1,17 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { validateEnv } from './lib/env';
+
+// Validate environment variables
+validateEnv();
 
 // Load Inter font
 const inter = Inter({ subsets: ['latin'] });
 
 // Metadata for the application
 export const metadata: Metadata = {
-  title: 'Pricing Guru | Freelancer Rate Calculator',
+  title: 'SkillPay | Freelancer Rate Calculator',
   description: 'An intelligent AI-driven freelancer pricing platform that provides sophisticated project cost estimation through advanced analytics and personalized pricing insights.',
   keywords: 'freelance, pricing, rates, calculator, project cost, estimation',
 };
