@@ -16,7 +16,6 @@ export const supabase = createClient(
 // Define types for database tables
 export type User = {
   id: number;
-  username: string;
   email: string;
   password: string;
   subscriptionTier: string;

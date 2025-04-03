@@ -1,1 +1,9 @@
-{}
+{
+  "/api/user/route": "app/api/user/route.js",
+  "/api/create-business-subscription/route": "app/api/create-business-subscription/route.js",
+  "/api/create-pro-subscription/route": "app/api/create-pro-subscription/route.js",
+  "/auth/page": "app/auth/page.js",
+  "/pricing/page": "app/pricing/page.js",
+  "/pricing-suggestion/page": "app/pricing-suggestion/page.js",
+  "/page": "app/page.js"
+}

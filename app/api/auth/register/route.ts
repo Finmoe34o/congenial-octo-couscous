@@ -6,7 +6,6 @@ import { z } from "zod";
 
 // Validate registration request
 const registerSchema = z.object({
-  username: z.string().min(3, { message: "Username must be at least 3 characters" }),
   email: z.string().email({ message: "Invalid email address" }),
   password: z.string().min(6, { message: "Password must be at least 6 characters" }),
   confirmPassword: z.string().min(6, { message: "Confirm password is required" }),
@@ -28,16 +27,9 @@ export async function POST(request: Request) {
       );
     }
     
-    const { username, email, password } = validationResult.data;
+    const {email, password } = validationResult.data;
     
-    // Check if the username or email is already taken
-    const existingUserByUsername = await storage.getUserByUsername(username);
-    if (existingUserByUsername) {
-      return NextResponse.json(
-        { error: "Username is already taken" },
-        { status: 400 }
-      );
-    }
+    // Check if the email is already taken
     
     const existingUserByEmail = await storage.getUserByEmail(email);
     if (existingUserByEmail) {
@@ -49,10 +41,8 @@ export async function POST(request: Request) {
     
     // Hash the password
     const hashedPassword = await hashPassword(password);
-    
     // Create the user
     const user = await storage.createUser({
-      username,
       email,
       password: hashedPassword,
       subscriptionTier: "basic", // Default to basic tier
@@ -63,7 +53,6 @@ export async function POST(request: Request) {
     // Create a JWT
     const token = await signJWT({
       userId: user.id,
-      username: user.username,
       email: user.email,
     });
     

@@ -12,7 +12,6 @@ const loginSchema = z.object({
 });
 
 const registerSchema = z.object({
-  username: z.string().min(3, { message: "Username must be at least 3 characters" }),
   email: z.string().email({ message: "Please enter a valid email address" }),
   password: z.string().min(6, { message: "Password must be at least 6 characters" }),
   confirmPassword: z.string().min(6, { message: "Please confirm your password" }),
@@ -31,7 +30,6 @@ export default function AuthPage() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const [registerData, setRegisterData] = useState({ 
-    username: '', 
     email: '', 
     password: '', 
     confirmPassword: '' 
@@ -271,21 +269,6 @@ export default function AuthPage() {
           {/* Register Form */}
           {activeTab === 'register' && (
             <form onSubmit={handleRegister} className="space-y-4">
-              <div>
-                <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
-                  Username
-                </label>
-                <input
-                  id="username"
-                  type="text"
-                  value={registerData.username}
-                  onChange={(e) => setRegisterData({ ...registerData, username: e.target.value })}
-                  className={`input-field w-full ${errors.username ? 'border-red-500' : ''}`}
-                  placeholder="yourusername"
-                />
-                {errors.username && <p className="mt-1 text-sm text-red-600">{errors.username}</p>}
-              </div>
-              
               <div>
                 <label htmlFor="register-email" className="block text-sm font-medium text-gray-700 mb-1">
                   Email

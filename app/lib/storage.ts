@@ -4,7 +4,6 @@ import { supabase, User, InsertUser, PriceSuggestion, InsertPriceSuggestion } fr
 export interface IStorage {
   // User management
   getUser(id: number): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
   getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   updateSubscriptionTier(userId: number, tier: string, suggestionsCount: number): Promise<User>;
@@ -35,17 +34,6 @@ export class SupabaseStorage implements IStorage {
     if (error || !data) return undefined;
     return data as User;
   }
-
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    const { data, error } = await supabase
-      .from('users')
-      .select('*')
-      .eq('username', username)
-      .single();
-    
-    if (error || !data) return undefined;
-    return data as User;
-  }
   
   async getUserByEmail(email: string): Promise<User | undefined> {
     const { data, error } = await supabase
@@ -64,11 +52,13 @@ export class SupabaseStorage implements IStorage {
     
     const { data, error } = await supabase
       .from('users')
-      .insert({ ...insertUser, createdAt: now })
+      .insert({email: insertUser.email, password: insertUser.password, subscription_tier: insertUser.subscriptionTier, suggestions_remaining: insertUser.suggestionsRemaining, created_at: insertUser.createdAt})
       .select()
       .single();
     
-    if (error) throw error;
+    if (error) {
+      console.log( insertUser)
+      throw error};
     return data as User;
   }
   

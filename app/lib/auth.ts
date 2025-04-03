@@ -11,7 +11,6 @@ const scryptAsync = promisify(scrypt);
 // JWT helpers for authentication
 export interface JWTPayload {
   userId: number;
-  username: string;
   email: string;
   exp?: number;
 }
@@ -64,7 +63,7 @@ export async function getCurrentUser(req?: NextRequest): Promise<User | null> {
     
     // If not found in header, try cookies
     if (!token) {
-      const cookieStore = cookies();
+      const cookieStore = await cookies();
       token = cookieStore.get("authToken")?.value;
     }
 

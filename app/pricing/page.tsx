@@ -74,7 +74,7 @@ export default function PricingPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+    <div className="max-w-7xl text-black mx-auto px-4 py-12 sm:px-6 lg:px-8">
       <div className="text-center mb-12">
         <Link href="/" className="inline-flex items-center text-sm text-indigo-600 hover:text-indigo-500 mb-6">
           <ArrowLeft className="mr-2 h-4 w-4" />
@@ -113,7 +113,7 @@ export default function PricingPage() {
         {/* Pro Plan */}
         <PricingCard
           title="Pro"
-          price="$7.99"
+          price="£3.99"
           priceDetail="/month"
           description="For established freelancers looking to optimize pricing"
           popular={true}
@@ -134,7 +134,7 @@ export default function PricingPage() {
         {/* Business Plan */}
         <PricingCard
           title="Business"
-          price="$19.99"
+          price="£5.99"
           priceDetail="/month"
           description="For professional freelancers and agencies"
           features={[
