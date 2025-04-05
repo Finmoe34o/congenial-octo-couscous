@@ -1,10 +1,6 @@
 {
-  "/api/pricing-suggestion/route": "app/api/pricing-suggestion/route.js",
-  "/api/user/route": "app/api/user/route.js",
-  "/api/pricing-suggestions/route": "app/api/pricing-suggestions/route.js",
+  "/api/create-payment-intent/route": "app/api/create-payment-intent/route.js",
+  "/checkout-page/page": "app/checkout-page/page.js",
   "/page": "app/page.js",
-  "/auth/page": "app/auth/page.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/pricing-suggestion/page": "app/pricing-suggestion/page.js",
-  "/dashboard/page": "app/dashboard/page.js"
+  "/payment-success/page": "app/payment-success/page.js"
 }

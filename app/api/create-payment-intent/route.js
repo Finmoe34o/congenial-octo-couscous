@@ -1,0 +1,26 @@
+import { NextRequest, NextResponse } from "next/server";
+if (process.env.STRIPE_SECRET_KEY === undefined) {
+  console.error("KJSADHSAJDJ")
+}
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
+export async function POST(request) {
+  try {
+    const { amount } = await request.json();
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amount,
+      currency: "gbp",
+      automatic_payment_methods: { enabled: true },
+    });
+
+    return NextResponse.json({ clientSecret: paymentIntent.client_secret });
+  } catch (error) {
+    console.error("Internal Error", error);
+
+    return NextResponse.json(
+      { error: `Internal Server Error: ${error}` },
+      { status: 500 }
+    );
+  }
+}

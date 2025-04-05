@@ -145,10 +145,11 @@ export class SupabaseStorage implements IStorage {
       ...suggestion,
       createdAt: new Date().toISOString()
     };
+    console.log(suggestionWithTimestamp)
     
     const { data, error } = await supabase
       .from('price_suggestions')
-      .insert(suggestionWithTimestamp)
+      .insert({user_id: suggestionWithTimestamp.userId, skill_type: suggestionWithTimestamp.skillType, experience_level: suggestionWithTimestamp.experienceLevel, project_scope: suggestionWithTimestamp.projectScope, location: suggestionWithTimestamp.location, target_market: suggestionWithTimestamp.targetMarket, min_price: suggestionWithTimestamp.minPrice, recommended_price: suggestionWithTimestamp.recommendedPrice, premium_price: suggestionWithTimestamp.premiumPrice, created_at: suggestionWithTimestamp.createdAt})
       .select()
       .single();
     

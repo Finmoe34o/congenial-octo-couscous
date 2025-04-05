@@ -8,13 +8,12 @@ export default function Home() {
       <header className="bg-white dark:bg-gray-900 shadow-sm">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold gradient-text">PricingGuru</h1>
+            <Link href="/" className="text-2xl font-bold gradient-text">PricingGuru</Link>
           </div>
           <nav className="hidden md:flex space-x-8">
             <Link href="/" className="nav-link font-medium">Home</Link>
             <Link href="/pricing" className="nav-link font-medium">Pricing</Link>
             <Link href="/pricing-suggestion" className="nav-link font-medium">Calculator</Link>
-            <Link href="/dashboard" className="nav-link font-medium">Dashboard</Link>
           </nav>
           <div className="flex space-x-4">
             <Link href="/auth" className="button-secondary">Sign In</Link>
@@ -90,7 +89,7 @@ export default function Home() {
       </section>
       
       {/* Features Section */}
-      <section className="py-16 px-4 bg-white dark:bg-gray-900">
+      <section id="features" className="py-16 px-4 bg-white dark:bg-gray-900">
         <div className="container mx-auto max-w-5xl">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">How PricingGuru Works</h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -188,17 +187,8 @@ export default function Home() {
             <div>
               <h4 className="font-semibold mb-4">Product</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><Link href="/features" className="hover:text-white transition-colors">Features</Link></li>
+                <li><a href="#features" className="hover:text-white scroll-smooth transition-colors">Features</a></li>
                 <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
-                <li><Link href="/faq" className="hover:text-white transition-colors">FAQ</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Company</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link href="/about" className="hover:text-white transition-colors">About Us</Link></li>
-                <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
-                <li><Link href="/careers" className="hover:text-white transition-colors">Careers</Link></li>
               </ul>
             </div>
             <div>

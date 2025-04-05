@@ -30,8 +30,8 @@ export default function PricingPage() {
       router.push('/auth?register=true');
       return;
     }
-    
-    try {
+    router.push("/checkout-page")
+    /*try {
       const response = await fetch('/api/create-pro-subscription', {
         method: 'POST',
         headers: {
@@ -46,7 +46,7 @@ export default function PricingPage() {
       }
     } catch (error) {
       console.error('Error creating subscription:', error);
-    }
+    }*/
   };
 
   const handleBusinessSubscribe = async () => {
@@ -88,7 +88,7 @@ export default function PricingPage() {
         </p>
       </div>
 
-      <div className="grid gap-8 md:grid-cols-3 lg:gap-12 mt-16">
+      <div className="grid gap-8 md:grid-cols-2 lg:gap-12 mt-16">
         {/* Basic Plan */}
         <PricingCard
           title="Basic"
@@ -113,7 +113,7 @@ export default function PricingPage() {
         {/* Pro Plan */}
         <PricingCard
           title="Pro"
-          price="£3.99"
+          price="£4.99"
           priceDetail="/month"
           description="For established freelancers looking to optimize pricing"
           popular={true}
@@ -131,7 +131,7 @@ export default function PricingPage() {
           onClick={handleProSubscribe}
         />
 
-        {/* Business Plan */}
+        {/* Business Plan 
         <PricingCard
           title="Business"
           price="£5.99"
@@ -149,8 +149,8 @@ export default function PricingPage() {
           ]}
           buttonText="Subscribe to Business"
           onClick={handleBusinessSubscribe}
-        />
-      </div>
+        /> */}
+      </div> 
 
       <div className="mt-20">
         <h2 className="text-3xl font-bold text-center mb-12">Why Choose PricingGuru?</h2>

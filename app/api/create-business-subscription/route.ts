@@ -8,7 +8,7 @@ import Stripe from "stripe";
 let stripe: Stripe | undefined;
 if (process.env.STRIPE_SECRET_KEY) {
   stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-    apiVersion: '2023-10-16',
+    apiVersion: '2025-02-24.acacia',
   });
 }
 
@@ -45,7 +45,6 @@ export async function POST(request: NextRequest) {
     if (!customerId) {
       const customer = await stripe.customers.create({
         email: user.email,
-        name: user.username,
       });
       
       // Save customer ID to user

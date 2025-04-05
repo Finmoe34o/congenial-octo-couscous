@@ -43,7 +43,7 @@ export function validateEnv(): string[] {
       hint: "Required for payment processing" 
     },
     { 
-      name: "VITE_STRIPE_PUBLIC_KEY", 
+      name: "NEXT_PUBLIC_STRIPE_PUBLIC_KEY", 
       required: false, 
       description: "Stripe publishable API key",
       hint: "Required for payment forms" 

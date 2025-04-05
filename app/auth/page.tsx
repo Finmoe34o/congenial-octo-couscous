@@ -1,5 +1,26 @@
 'use client';
 
+/*
+
+
+
+
+
+
+
+USE LOCAL STORAGE TO MAKE THIS AUTOMATIC UPON JOINING
+
+
+
+
+
+
+
+
+
+
+*/
+
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
