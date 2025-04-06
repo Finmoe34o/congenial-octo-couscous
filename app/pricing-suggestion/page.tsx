@@ -7,11 +7,11 @@ import { z } from 'zod';
 
 // Form validation schema
 const pricingSuggestionSchema = z.object({
-  skillType: z.string().min(1, { message: "Skill type is required" }),
-  experienceLevel: z.string().min(1, { message: "Experience level is required" }),
-  projectScope: z.string().min(1, { message: "Project scope is required" }),
+  skill_type: z.string().min(1, { message: "Skill type is required" }),
+  experience_level: z.string().min(1, { message: "Experience level is required" }),
+  project_scope: z.string().min(1, { message: "Project scope is required" }),
   location: z.string().optional(),
-  targetMarket: z.string().optional(),
+  target_market: z.string().optional(),
 });
 
 type FormValues = z.infer<typeof pricingSuggestionSchema>;
@@ -19,34 +19,33 @@ type FormValues = z.infer<typeof pricingSuggestionSchema>;
 // Type for pricing suggestion result
 type PricingSuggestion = {
   id: number;
-  userId: number;
-  skillType: string;
-  experienceLevel: string;
-  projectScope: string;
+  user_id: number;
+  skill_type: string;
+  experience_level: string;
+  project_scope: string;
   location?: string;
-  targetMarket?: string;
-  minPrice: string;
-  recommendedPrice: string;
-  premiumPrice: string;
-  createdAt: string;
+  target_market?: string;
+  min_price: string;
+  recommended_price: string;
+  premium_price: string;
+  created_at: string;
 };
 
 export default function PricingSuggestionPage() {
   const router = useRouter();
   const [user, setUser] = useState<{ 
-    username: string;
-    subscriptionTier: string;
-    suggestionsRemaining: number; 
+    subscription_tier: string;
+    suggestions_remaining: number; 
   } | null>(null);
   
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [formValues, setFormValues] = useState<FormValues>({
-    skillType: '',
-    experienceLevel: '',
-    projectScope: '',
+    skill_type: '',
+    experience_level: '',
+    project_scope: '',
     location: '',
-    targetMarket: '',
+    target_market: '',
   });
   
   const [result, setResult] = useState<PricingSuggestion | null>(null);
@@ -80,9 +79,8 @@ export default function PricingSuggestionPage() {
         
         const userData = await response.json();
         setUser(userData);
-        
         // Only fetch pricing history for Pro or Business tier
-        if (userData.subscriptionTier === 'pro' || userData.subscriptionTier === 'business') {
+        if (userData.subscription_tier === 'pro' || userData.subscription_tier === 'business') {
           fetchPricingHistory();
         }
       } catch (error) {
@@ -143,7 +141,6 @@ export default function PricingSuggestionPage() {
       });
       
       const data = await response.json();
-      console.log(data, "DATA")
       if (!response.ok) {
         setError(data.error || 'Failed to generate price suggestion.');
         setIsLoading(false);
@@ -151,7 +148,7 @@ export default function PricingSuggestionPage() {
         // If the error is that the user has no suggestions remaining, update the user object
         if (data.suggestionsRemaining !== undefined) {
           setUser((prev) => 
-            prev ? { ...prev, suggestionsRemaining: data.suggestionsRemaining } : null
+            prev ? { ...prev, suggestions_remaining: data.suggestionsRemaining } : null
           );
         }
         
@@ -162,14 +159,14 @@ export default function PricingSuggestionPage() {
       setResult(data);
       
       // Update user's suggestions remaining count
-      if (user && user.subscriptionTier !== 'business') {
+      if (user && user.subscription_tier !== 'business') {
         setUser((prev) => 
-          prev ? { ...prev, suggestionsRemaining: prev.suggestionsRemaining - 1 } : null
+          prev ? { ...prev, suggestions_remaining: prev.suggestions_remaining - 1 } : null
         );
       }
       
       // Refresh pricing history for paid tiers
-      if (user && (user.subscriptionTier === 'pro' || user.subscriptionTier === 'business')) {
+      if (user && (user.subscription_tier === 'pro' || user.subscription_tier === 'business')) {
         fetchPricingHistory();
       }
       
@@ -207,7 +204,6 @@ export default function PricingSuggestionPage() {
 
   // Format skill type for display
   const formatSkillType = (skillType: string) => {
-    console.log(skillType)
     return skillType
       .split('-')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -261,18 +257,17 @@ export default function PricingSuggestionPage() {
             
             <div className="hidden md:flex items-center space-x-4">
               <div className="text-sm text-gray-600 dark:text-gray-300">
-                <span className="font-medium">{user.username}</span>
                 <span className="mx-2">•</span>
-                <span className="capitalize">{user.subscriptionTier} Plan</span>
-                {user.subscriptionTier !== 'business' && (
+                <span className="capitalize">{user.subscription_tier} Plan</span>
+                {user.subscription_tier !== 'business' && (
                   <>
                     <span className="mx-2">•</span>
-                    <span>{user.suggestionsRemaining} suggestions remaining</span>
+                    <span>{user.suggestions_remaining} suggestions remaining</span>
                   </>
                 )}
               </div>
               
-              {(user.subscriptionTier === 'pro' || user.subscriptionTier === 'business') && (
+              {(user.subscription_tier === 'pro' || user.subscription_tier === 'business') && (
                 <button
                   onClick={() => setShowHistory(!showHistory)}
                   className="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 text-sm font-medium"
@@ -311,7 +306,7 @@ export default function PricingSuggestionPage() {
             {/* Calculator Column */}
             <div className={showHistory ? '' : 'lg:max-w-2xl lg:mx-auto w-full'}>
               {/* Subscription Warning */}
-              {user.subscriptionTier === 'basic' && user.suggestionsRemaining === 0 && (
+              {user.subscription_tier === 'basic' && user.suggestions_remaining === 0 && (
                 <div className="bg-amber-50 border border-amber-200 text-amber-800 rounded-md p-4 mb-6">
                   <div className="flex">
                     <div className="flex-shrink-0">
@@ -347,127 +342,127 @@ export default function PricingSuggestionPage() {
                 )}
                 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Skill Type */}
-                  <div>
-                    <label htmlFor="skillType" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      Skill Type <span className="text-red-500">*</span>
-                    </label>
-                    <select
-                      id="skillType"
-                      name="skillType"
-                      value={formValues.skillType}
-                      onChange={handleChange}
-                      className={`input-field w-full ${errors.skillType ? 'border-red-500' : ''}`}
-                    >
-                      <option value="">Select skill type</option>
-                      <option value="web-development">Web Development</option>
-                      <option value="mobile-development">Mobile Development</option>
-                      <option value="ui-design">UI Design</option>
-                      <option value="graphic-design">Graphic Design</option>
-                      <option value="content-writing">Content Writing</option>
-                      <option value="video-editing">Video Editing</option>
-                      <option value="marketing">Marketing</option>
-                      <option value="seo">SEO</option>
-                      <option value="data-analysis">Data Analysis</option>
-                      <option value="project-management">Project Management</option>
-                      <option value="virtual-assistant">Virtual Assistant</option>
-                      <option value="accounting">Accounting</option>
-                      <option value="legal">Legal</option>
-                      <option value="translation">Translation</option>
-                      <option value="voice-over">Voice Over</option>
-                    </select>
-                    {errors.skillType && <p className="mt-1 text-sm text-red-600">{errors.skillType}</p>}
-                  </div>
-                  
-                  {/* Experience Level */}
-                  <div>
-                    <label htmlFor="experienceLevel" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      Experience Level <span className="text-red-500">*</span>
-                    </label>
-                    <select
-                      id="experienceLevel"
-                      name="experienceLevel"
-                      value={formValues.experienceLevel}
-                      onChange={handleChange}
-                      className={`input-field w-full ${errors.experienceLevel ? 'border-red-500' : ''}`}
-                    >
-                      <option value="">Select experience level</option>
-                      <option value="beginner">Beginner (0-2 years)</option>
-                      <option value="intermediate">Intermediate (3-5 years)</option>
-                      <option value="expert">Expert (6-9 years)</option>
-                      <option value="master">Master (10+ years)</option>
-                    </select>
-                    {errors.experienceLevel && <p className="mt-1 text-sm text-red-600">{errors.experienceLevel}</p>}
-                  </div>
-                  
-                  {/* Project Scope */}
-                  <div>
-                    <label htmlFor="projectScope" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      Project Scope <span className="text-red-500">*</span>
-                    </label>
-                    <select
-                      id="projectScope"
-                      name="projectScope"
-                      value={formValues.projectScope}
-                      onChange={handleChange}
-                      className={`input-field w-full ${errors.projectScope ? 'border-red-500' : ''}`}
-                    >
-                      <option value="">Select project scope</option>
-                      <option value="small">Small (1-2 weeks)</option>
-                      <option value="medium">Medium (1-2 months)</option>
-                      <option value="large">Large (3-6 months)</option>
-                      <option value="enterprise">Enterprise (6+ months)</option>
-                    </select>
-                    {errors.projectScope && <p className="mt-1 text-sm text-red-600">{errors.projectScope}</p>}
-                  </div>
-                  
-                  {/* Location */}
-                  <div>
-                    <label htmlFor="location" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      Your Location <span className="text-gray-400">(optional)</span>
-                    </label>
-                    <input
-                      id="location"
-                      name="location"
-                      type="text"
-                      value={formValues.location}
-                      onChange={handleChange}
-                      className="input-field w-full"
-                      placeholder="e.g. United States, Canada, etc."
-                    />
-                  </div>
-                  
-                  {/* Target Market */}
-                  <div>
-                    <label htmlFor="targetMarket" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      Target Market <span className="text-gray-400">(optional)</span>
-                    </label>
-                    <input
-                      id="targetMarket"
-                      name="targetMarket"
-                      type="text"
-                      value={formValues.targetMarket}
-                      onChange={handleChange}
-                      className="input-field w-full"
-                      placeholder="e.g. Small Business, Enterprise, etc."
-                    />
-                  </div>
-                  
-                  {/* Submit Button */}
-                  <div>
+  {/* Skill Type */}
+  <div>
+    <label htmlFor="skill_type" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+      Skill Type <span className="text-red-500">*</span>
+    </label>
+    <select
+      id="skill_type"
+      name="skill_type"
+      value={formValues.skill_type}
+      onChange={handleChange}
+      className={`input-field w-full ${errors.skillType ? 'border-red-500' : ''}`}
+    >
+      <option value="">Select skill type</option>
+      <option value="web-development">Web Development</option>
+      <option value="mobile-development">Mobile Development</option>
+      <option value="ui-design">UI Design</option>
+      <option value="graphic-design">Graphic Design</option>
+      <option value="content-writing">Content Writing</option>
+      <option value="video-editing">Video Editing</option>
+      <option value="marketing">Marketing</option>
+      <option value="seo">SEO</option>
+      <option value="data-analysis">Data Analysis</option>
+      <option value="project-management">Project Management</option>
+      <option value="virtual-assistant">Virtual Assistant</option>
+      <option value="accounting">Accounting</option>
+      <option value="legal">Legal</option>
+      <option value="translation">Translation</option>
+      <option value="voice-over">Voice Over</option>
+    </select>
+    {errors.skillType && <p className="mt-1 text-sm text-red-600">{errors.skillType}</p>}
+  </div>
+
+  {/* Experience Level */}
+  <div>
+    <label htmlFor="experience_level" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+      Experience Level <span className="text-red-500">*</span>
+    </label>
+    <select
+      id="experience_level"
+      name="experience_level"
+      value={formValues.experience_level}
+      onChange={handleChange}
+      className={`input-field w-full ${errors.experienceLevel ? 'border-red-500' : ''}`}
+    >
+      <option value="">Select experience level</option>
+      <option value="beginner">Beginner (0-2 years)</option>
+      <option value="intermediate">Intermediate (3-5 years)</option>
+      <option value="expert">Expert (6-9 years)</option>
+      <option value="master">Master (10+ years)</option>
+    </select>
+    {errors.experienceLevel && <p className="mt-1 text-sm text-red-600">{errors.experienceLevel}</p>}
+  </div>
+
+  {/* Project Scope */}
+  <div>
+    <label htmlFor="project_scope" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+      Project Scope <span className="text-red-500">*</span>
+    </label>
+    <select
+      id="project_scope"
+      name="project_scope"
+      value={formValues.project_scope}
+      onChange={handleChange}
+      className={`input-field w-full ${errors.projectScope ? 'border-red-500' : ''}`}
+    >
+      <option value="">Select project scope</option>
+      <option value="small">Small (1-2 weeks)</option>
+      <option value="medium">Medium (1-2 months)</option>
+      <option value="large">Large (3-6 months)</option>
+      <option value="enterprise">Enterprise (6+ months)</option>
+    </select>
+    {errors.projectScope && <p className="mt-1 text-sm text-red-600">{errors.projectScope}</p>}
+  </div>
+
+  {/* Location */}
+  <div>
+    <label htmlFor="location" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+      Your Location <span className="text-gray-400">(optional)</span>
+    </label>
+    <input
+      id="location"
+      name="location"
+      type="text"
+      value={formValues.location}
+      onChange={handleChange}
+      className="input-field w-full"
+      placeholder="e.g. United States, Canada, etc."
+    />
+  </div>
+
+  {/* Target Market */}
+  <div>
+    <label htmlFor="target_market" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+      Target Market <span className="text-gray-400">(optional)</span>
+    </label>
+    <input
+      id="target_market"
+      name="target_market"
+      type="text"
+      value={formValues.target_market}
+      onChange={handleChange}
+      className="input-field w-full"
+      placeholder="e.g. Small Business, Enterprise, etc."
+    />
+  </div>
+  {/* Submit Button */}
+  <div>
                     <button
                       type="submit"
-                      disabled={isLoading || (user.subscriptionTier === 'basic' && user.suggestionsRemaining === 0)}
+                      disabled={isLoading || (user.subscription_tier === 'basic' && user.suggestions_remaining === 0)}
                       className="w-full button-primary flex items-center justify-center py-2 px-4"
                     >
                       {isLoading ? (
                         <span className="inline-block h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></span>
                       ) : null}
                       Calculate Pricing
-                    </button>
-                  </div>
-                </form>
-              </div>
+      </button>
+  </div>
+</form>
+</div>
+
               
               {/* Results */}
               {result && (
@@ -478,15 +473,15 @@ export default function PricingSuggestionPage() {
                     <div className="grid md:grid-cols-2 gap-4 mb-6">
                       <div className="border border-gray-200 dark:border-gray-700 rounded-md p-3">
                         <span className="text-sm text-gray-500 dark:text-gray-400">Skill Type</span>
-                        <p className="font-medium">{formatSkillType(result.skillType)}</p>
+                        <p className="font-medium">{formatSkillType(result.skill_type)}</p>
                       </div>
                       <div className="border border-gray-200 dark:border-gray-700 rounded-md p-3">
                         <span className="text-sm text-gray-500 dark:text-gray-400">Experience Level</span>
-                        <p className="font-medium">{formatExperienceLevel(result.experienceLevel)}</p>
+                        <p className="font-medium">{formatExperienceLevel(result.experience_level)}</p>
                       </div>
                       <div className="border border-gray-200 dark:border-gray-700 rounded-md p-3">
                         <span className="text-sm text-gray-500 dark:text-gray-400">Project Scope</span>
-                        <p className="font-medium">{formatExperienceLevel(result.projectScope)}</p>
+                        <p className="font-medium">{formatExperienceLevel(result.project_scope)}</p>
                       </div>
                       {result.location && (
                         <div className="border border-gray-200 dark:border-gray-700 rounded-md p-3">
@@ -501,7 +496,7 @@ export default function PricingSuggestionPage() {
                       <div className="grid grid-cols-3 gap-4">
                         <div className="bg-gray-50 dark:bg-gray-700 rounded-md p-4 text-center">
                           <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Minimum</p>
-                          <p className="text-xl font-bold">{result.minPrice}</p>
+                          <p className="text-xl font-bold">{result.min_price}</p>
                           <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Budget Option</p>
                         </div>
                         <div className="bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-800 rounded-md p-4 text-center relative">
@@ -509,12 +504,12 @@ export default function PricingSuggestionPage() {
                             Recommended
                           </div>
                           <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Standard</p>
-                          <p className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">{result.recommendedPrice}</p>
+                          <p className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">{result.recommended_price}</p>
                           <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Competitive Rate</p>
                         </div>
                         <div className="bg-gray-50 dark:bg-gray-700 rounded-md p-4 text-center">
                           <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Premium</p>
-                          <p className="text-xl font-bold">{result.premiumPrice}</p>
+                          <p className="text-xl font-bold">{result.premium_price}</p>
                           <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Expert Rate</p>
                         </div>
                       </div>
@@ -547,17 +542,17 @@ export default function PricingSuggestionPage() {
                         
                         <div key={item.id} className="border border-gray-200 dark:border-gray-700 rounded-md p-4">
                           <div className="flex justify-between items-start mb-2">
-                            <h3 className="font-medium">{formatSkillType(item.skillType)}</h3>
-                            <span className="text-xs text-gray-500 dark:text-gray-400">{formatDate(item.createdAt)}</span>
+                            <h3 className="font-medium">{formatSkillType(item.skill_type)}</h3>
+                            <span className="text-xs text-gray-500 dark:text-gray-400">{formatDate(item.created_at)}</span>
                           </div>
                           <div className="grid grid-cols-3 gap-2 mb-2 text-sm">
                             <div>
                               <span className="text-gray-500 dark:text-gray-400">Experience:</span>{' '}
-                              <span>{formatExperienceLevel(item.experienceLevel)}</span>
+                              <span>{formatExperienceLevel(item.experience_level)}</span>
                             </div>
                             <div>
                               <span className="text-gray-500 dark:text-gray-400">Scope:</span>{' '}
-                              <span>{formatExperienceLevel(item.projectScope)}</span>
+                              <span>{formatExperienceLevel(item.project_scope)}</span>
                             </div>
                             {item.location && (
                               <div>
@@ -569,15 +564,15 @@ export default function PricingSuggestionPage() {
                           <div className="border-t border-gray-200 dark:border-gray-700 mt-3 pt-3 grid grid-cols-3 gap-2 text-center">
                             <div>
                               <p className="text-xs text-gray-500 dark:text-gray-400">Minimum</p>
-                              <p className="font-medium">{item.minPrice}</p>
+                              <p className="font-medium">{item.min_price}</p>
                             </div>
                             <div className="text-indigo-600 dark:text-indigo-400">
                               <p className="text-xs text-gray-500 dark:text-gray-400">Recommended</p>
-                              <p className="font-bold">{item.recommendedPrice}</p>
+                              <p className="font-bold">{item.recommended_price}</p>
                             </div>
                             <div>
                               <p className="text-xs text-gray-500 dark:text-gray-400">Premium</p>
-                              <p className="font-medium">{item.premiumPrice}</p>
+                              <p className="font-medium">{item.premium_price}</p>
                             </div>
                           </div>
                         </div>
@@ -590,7 +585,7 @@ export default function PricingSuggestionPage() {
           </div>
           
           {/* Upgrade CTA for Basic Users */}
-          {user.subscriptionTier === 'basic' && (
+          {user.subscription_tier === 'basic' && (
             <div className="mt-12 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800 rounded-xl p-6 text-center">
               <h3 className="text-xl font-semibold mb-2">Upgrade for More Features</h3>
               <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-xl mx-auto">

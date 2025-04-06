@@ -7,7 +7,6 @@ export async function GET(request: NextRequest) {
   try {
     // Get the current user
     const user = await getCurrentUser(request);
-    console.log(user,"user user user user user")
     if (!user) {
       return NextResponse.json(
         { error: "Unauthorized" },
@@ -16,7 +15,7 @@ export async function GET(request: NextRequest) {
     }
     
     // Check if the user is on a paid tier (Pro or Business)
-    if (user.subscriptionTier !== 'pro' && user.subscriptionTier !== 'business') {
+    if (user.subscription_tier !== 'pro' && user.subscription_tier !== 'business') {
       return NextResponse.json(
         { error: "This feature is only available on Pro or Business plans" },
         { status: 403 }

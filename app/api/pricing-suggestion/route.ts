@@ -36,7 +36,7 @@ function getBaseRate(skill_type: string): number {
 }
 
 // Experience level multiplier
-function getExperienceMultiplier(experienceLevel: string): number {
+function getExperienceMultiplier(experience_level: string): number {
   const multipliers: Record<string, number> = {
     'beginner': 0.7,     // 70% of base rate
     'intermediate': 1.0, // 100% of base rate
@@ -44,7 +44,7 @@ function getExperienceMultiplier(experienceLevel: string): number {
     'master': 2.0,       // 200% of base rate
   };
   
-  return multipliers[experienceLevel] || 1.0;
+  return multipliers[experience_level] || 1.0;
 }
 
 // Project scope multiplier
@@ -100,6 +100,7 @@ export async function POST(request: NextRequest) {
         { status: 401 }
       );
     }
+    console.log(user, "USER BLUDCLART USER")
     // Check if the user has remaining suggestions (except for business tier)
     if (user.subscription_tier !== 'business' && user.suggestions_remaining <= 0) {
       return NextResponse.json(
@@ -114,6 +115,7 @@ export async function POST(request: NextRequest) {
     // Parse and validate the request body
     const body = await request.json();
     const validationResult = pricingSuggestionSchema.safeParse(body);
+    console.log(validationResult,body)
     if (!validationResult.success) {
       return NextResponse.json(
         { error: "Invalid request data", details: validationResult.error.issues },

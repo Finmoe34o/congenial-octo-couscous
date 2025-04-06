@@ -5,7 +5,6 @@ export async function GET(request: NextRequest) {
   try {
     // Get the current user
     const user = await getCurrentUser(request);
-    
     if (!user) {
       return NextResponse.json(
         { error: "Unauthorized" },

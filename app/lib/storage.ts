@@ -129,11 +129,11 @@ export class SupabaseStorage implements IStorage {
     return data as User;
   }
   
-  async getPriceSuggestions(userId: number): Promise<PriceSuggestion[]> {
+  async getPriceSuggestions(user_id: number): Promise<PriceSuggestion[]> {
     const { data, error } = await supabase
       .from('price_suggestions')
       .select('*')
-      .eq('userId', userId)
+      .eq('userId', user_id)
       .order('createdAt', { ascending: false });
     
     if (error) throw error;

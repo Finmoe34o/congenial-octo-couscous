@@ -30,6 +30,11 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/api/pricing-suggestion/route.js"
+    ],
+    "/api/pricing-suggestions/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/pricing-suggestions/route.js"
     ]
   }
 }
