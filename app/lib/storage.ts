@@ -16,9 +16,9 @@ export interface IStorage {
   // Price suggestions
   getPriceSuggestions(userId: number): Promise<PriceSuggestion[]>;
   createPriceSuggestion(suggestion: InsertPriceSuggestion & { 
-    minPrice?: string, 
-    recommendedPrice?: string, 
-    premiumPrice?: string 
+    min_price?: string, 
+    recommended_price?: string, 
+    premium_price?: string 
   }): Promise<PriceSuggestion>;
 }
 
@@ -52,12 +52,17 @@ export class SupabaseStorage implements IStorage {
     
     const { data, error } = await supabase
       .from('users')
-      .insert({email: insertUser.email, password: insertUser.password, subscription_tier: insertUser.subscriptionTier, suggestions_remaining: insertUser.suggestionsRemaining, created_at: insertUser.createdAt})
+      .insert({
+        email: insertUser.email,
+        password: insertUser.password,
+        subscription_tier: insertUser.subscription_tier,
+        suggestions_remaining: insertUser.suggestions_remaining,
+        created_at: insertUser.created_at
+      })      
       .select()
       .single();
     
     if (error) {
-      console.log( insertUser)
       throw error};
     return data as User;
   }
@@ -66,8 +71,8 @@ export class SupabaseStorage implements IStorage {
     const { data, error } = await supabase
       .from('users')
       .update({ 
-        subscriptionTier: tier,
-        suggestionsRemaining: suggestionsCount
+        subscription_tier: tier,
+        suggestions_remaining: suggestionsCount
       })
       .eq('id', userId)
       .select()
@@ -83,7 +88,7 @@ export class SupabaseStorage implements IStorage {
     if (!user) throw new Error('User not found');
     
     // Calculate remaining suggestions (don't go below 0)
-    const remaining = Math.max(0, (user.suggestionsRemaining || 0) - 1);
+    const remaining = Math.max(0, (user.suggestions_remaining || 0) - 1);
     
     // Update the user
     const { data, error } = await supabase
@@ -136,20 +141,30 @@ export class SupabaseStorage implements IStorage {
   }
   
   async createPriceSuggestion(suggestion: InsertPriceSuggestion & { 
-    minPrice?: string, 
-    recommendedPrice?: string, 
-    premiumPrice?: string 
+    min_price?: string, 
+    recommended_price?: string, 
+    premium_price?: string 
   }): Promise<PriceSuggestion> {
     // Add current timestamp
     const suggestionWithTimestamp = {
       ...suggestion,
-      createdAt: new Date().toISOString()
+      created_at: new Date().toISOString()
     };
-    console.log(suggestionWithTimestamp)
     
     const { data, error } = await supabase
       .from('price_suggestions')
-      .insert({user_id: suggestionWithTimestamp.userId, skill_type: suggestionWithTimestamp.skillType, experience_level: suggestionWithTimestamp.experienceLevel, project_scope: suggestionWithTimestamp.projectScope, location: suggestionWithTimestamp.location, target_market: suggestionWithTimestamp.targetMarket, min_price: suggestionWithTimestamp.minPrice, recommended_price: suggestionWithTimestamp.recommendedPrice, premium_price: suggestionWithTimestamp.premiumPrice, created_at: suggestionWithTimestamp.createdAt})
+      .insert({
+        user_id: suggestionWithTimestamp.user_id,
+        skill_type: suggestionWithTimestamp.skill_type,
+        experience_level: suggestionWithTimestamp.experience_level,
+        project_scope: suggestionWithTimestamp.project_scope,
+        location: suggestionWithTimestamp.location,
+        target_market: suggestionWithTimestamp.target_market,
+        min_price: suggestionWithTimestamp.min_price,
+        recommended_price: suggestionWithTimestamp.recommended_price,
+        premium_price: suggestionWithTimestamp.premium_price,
+        created_at: suggestionWithTimestamp.created_at
+      })
       .select()
       .single();
     

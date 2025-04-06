@@ -143,7 +143,7 @@ export default function PricingSuggestionPage() {
       });
       
       const data = await response.json();
-      
+      console.log(data, "DATA")
       if (!response.ok) {
         setError(data.error || 'Failed to generate price suggestion.');
         setIsLoading(false);
@@ -207,6 +207,7 @@ export default function PricingSuggestionPage() {
 
   // Format skill type for display
   const formatSkillType = (skillType: string) => {
+    console.log(skillType)
     return skillType
       .split('-')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -543,6 +544,7 @@ export default function PricingSuggestionPage() {
                   ) : (
                     <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2">
                       {pricingHistory.map((item) => (
+                        
                         <div key={item.id} className="border border-gray-200 dark:border-gray-700 rounded-md p-4">
                           <div className="flex justify-between items-start mb-2">
                             <h3 className="font-medium">{formatSkillType(item.skillType)}</h3>

@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
     }
     
     // Create or get Stripe customer
-    let customerId = user.stripeCustomerId;
+    let customerId = user.stripe_customer_id;
     
     if (!customerId) {
       const customer = await stripe.customers.create({

@@ -45,9 +45,9 @@ export async function POST(request: Request) {
     const user = await storage.createUser({
       email,
       password: hashedPassword,
-      subscriptionTier: "basic", // Default to basic tier
-      suggestionsRemaining: 5,    // Start with 5 suggestions for free tier
-      createdAt: new Date().toISOString(),
+      subscription_tier: "basic", // Default to basic tier
+      suggestions_remaining: 5,    // Start with 5 suggestions for free tier
+      created_at: new Date().toISOString(),
     });
     
     // Create a JWT

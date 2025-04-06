@@ -3,10 +3,11 @@ import { getCurrentUser } from "../../lib/auth";
 import { storage } from "../../lib/storage";
 
 export async function GET(request: NextRequest) {
+  
   try {
     // Get the current user
     const user = await getCurrentUser(request);
-    
+    console.log(user,"user user user user user")
     if (!user) {
       return NextResponse.json(
         { error: "Unauthorized" },

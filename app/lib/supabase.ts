@@ -18,27 +18,27 @@ export type User = {
   id: number;
   email: string;
   password: string;
-  subscriptionTier: string;
-  suggestionsRemaining: number;
-  stripeCustomerId?: string;
-  stripeSubscriptionId?: string;
-  createdAt: string;
+  subscription_tier: string;
+  suggestions_remaining: number;
+  stripe_customer_id?: string;
+  stripe_subscription_id?: string;
+  created_at: string;
 }
 
 export type InsertUser = Omit<User, 'id'>;
 
 export type PriceSuggestion = {
   id: number;
-  userId: number;
-  skillType: string;
-  experienceLevel: string;
-  projectScope: string;
+  user_id: number;
+  skill_type: string;
+  experience_level: string;
+  project_scope: string;
   location?: string;
-  targetMarket?: string;
-  minPrice: string;
-  recommendedPrice: string;
-  premiumPrice: string;
-  createdAt: string;
+  target_market?: string;
+  min_price: string;
+  recommended_price: string;
+  premium_price: string;
+  created_at: string;
 }
 
-export type InsertPriceSuggestion = Omit<PriceSuggestion, 'id' | 'minPrice' | 'recommendedPrice' | 'premiumPrice' | 'createdAt'>;
+export type InsertPriceSuggestion = Omit<PriceSuggestion, 'id' | 'min_price' | 'recommended_price' | 'premium_price' | 'created_at'>;
