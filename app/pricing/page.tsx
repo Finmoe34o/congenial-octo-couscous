@@ -153,7 +153,7 @@ export default function PricingPage() {
       </div> 
 
       <div className="mt-20">
-        <h2 className="text-3xl font-bold text-center mb-12">Why Choose PricingGuru?</h2>
+        <h2 className="text-3xl font-bold text-center mb-12">Why Choose SkillPay?</h2>
         
         <div className="grid md:grid-cols-3 gap-8">
           <div className="flex flex-col items-center text-center p-6">

@@ -193,7 +193,7 @@ export default function AuthPage() {
           {/* Logo and Navigation */}
           <div className="text-center mb-8">
             <Link href="/" className="inline-block mb-6">
-              <h1 className="text-3xl font-bold gradient-text">PricingGuru</h1>
+              <h1 className="text-3xl font-bold gradient-text">SkillPay</h1>
             </Link>
             
             {/* Tab Switching */}
@@ -372,7 +372,7 @@ export default function AuthPage() {
             Set The Right Price For Your Freelance Services
           </h2>
           <p className="text-xl opacity-90 mb-6">
-            Join thousands of freelancers who use PricingGuru to confidently set their rates and maximize earnings.
+            Join thousands of freelancers who use SkillPay to confidently set their rates and maximize earnings.
           </p>
           
           <div className="bg-white/10 rounded-xl p-6 backdrop-blur-sm">
@@ -388,7 +388,7 @@ export default function AuthPage() {
               </div>
             </div>
             
-            <div className="flex items-center mb-4">
+            {/*<div className="flex items-center mb-4">
               <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center mr-4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -410,7 +410,7 @@ export default function AuthPage() {
                 <p className="font-semibold">Pricing History & Analytics</p>
                 <p className="text-sm opacity-70">Track your pricing history and market trends</p>
               </div>
-            </div>
+            </div>*/}
           </div>
         </div>
       </div>

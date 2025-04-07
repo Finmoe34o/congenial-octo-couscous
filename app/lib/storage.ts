@@ -93,7 +93,7 @@ export class SupabaseStorage implements IStorage {
     // Update the user
     const { data, error } = await supabase
       .from('users')
-      .update({ suggestionsRemaining: remaining })
+      .update({ suggestions_remaining: remaining })
       .eq('id', userId)
       .select()
       .single();

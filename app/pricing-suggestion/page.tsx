@@ -241,19 +241,19 @@ export default function PricingSuggestionPage() {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <h1 className="text-2xl font-bold gradient-text">PricingGuru</h1>
+              <h1 className="text-2xl font-bold gradient-text">SkillPay</h1>
             </Link>
           </div>
           
           <div className="flex items-center space-x-8">
-            <nav className="hidden md:flex space-x-6 mr-4">
+            {/*<nav className="hidden md:flex space-x-6 mr-4">
               <Link href="/pricing" className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white text-sm font-medium">
                 Pricing
               </Link>
               <Link href="/dashboard" className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white text-sm font-medium">
                 Dashboard
               </Link>
-            </nav>
+            </nav>*/}
             
             <div className="hidden md:flex items-center space-x-4">
               <div className="text-sm text-gray-600 dark:text-gray-300">

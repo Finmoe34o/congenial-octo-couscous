@@ -8,11 +8,11 @@ export default function Home() {
       <header className="bg-white dark:bg-gray-900 shadow-sm">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center">
-            <Link href="/" className="text-2xl font-bold gradient-text">PricingGuru</Link>
+            <Link href="/" className="text-2xl font-bold gradient-text">SkillPay</Link>
           </div>
-          <nav className="hidden md:flex space-x-8">
+          <nav className="hidden md:flex space-x-12">
             <Link href="/" className="nav-link font-medium">Home</Link>
-            <Link href="/pricing" className="nav-link font-medium">Pricing</Link>
+            {/*<Link href="/pricing" className="nav-link font-medium">Pricing</Link>*/}
             <Link href="/pricing-suggestion" className="nav-link font-medium">Calculator</Link>
           </nav>
           <div className="flex space-x-4">
@@ -36,9 +36,9 @@ export default function Home() {
               <Link href="/auth?register=true" className="button-primary text-center py-3 px-8 text-lg">
                 Get Started
               </Link>
-              <Link href="/pricing" className="bg-white/10 hover:bg-white/20 text-white border border-white/30 rounded-md py-3 px-8 text-lg text-center transition-colors duration-300">
+              {/*<Link href="/pricing" className="bg-white/10 hover:bg-white/20 text-white border border-white/30 rounded-md py-3 px-8 text-lg text-center transition-colors duration-300">
                 View Plans
-              </Link>
+              </Link>*/}
             </div>
           </div>
           <div className="md:w-1/2">
@@ -91,7 +91,7 @@ export default function Home() {
       {/* Features Section */}
       <section id="features" className="py-16 px-4 bg-white dark:bg-gray-900">
         <div className="container mx-auto max-w-5xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">How PricingGuru Works</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">How SkillPay Works</h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-sm card-hover">
               <div className="w-12 h-12 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center mb-4">
@@ -140,7 +140,7 @@ export default function Home() {
                 </div>
               </div>
               <p className="text-gray-600 dark:text-gray-300">
-                "I've been undercharging for years! PricingGuru helped me realize my true market value and gave me the confidence to raise my rates by 30%."
+                "I've been undercharging for years! SkillPay helped me realize my true market value and gave me the confidence to raise my rates by 30%."
               </p>
             </div>
             <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-sm">
@@ -177,9 +177,9 @@ export default function Home() {
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12 px-4">
         <div className="container mx-auto max-w-5xl">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 gap-8">
             <div>
-              <h3 className="text-xl font-bold mb-4 gradient-text">PricingGuru</h3>
+              <h3 className="text-xl font-bold mb-4 gradient-text">SkillPay</h3>
               <p className="text-gray-400">
                 Smart pricing for freelancers and independent professionals.
               </p>
@@ -188,19 +188,19 @@ export default function Home() {
               <h4 className="font-semibold mb-4">Product</h4>
               <ul className="space-y-2 text-gray-400">
                 <li><a href="#features" className="hover:text-white scroll-smooth transition-colors">Features</a></li>
-                <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
+                {/*<li><Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>*/}
               </ul>
             </div>
-            <div>
+            {/*<div>
               <h4 className="font-semibold mb-4">Legal</h4>
               <ul className="space-y-2 text-gray-400">
                 <li><Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
                 <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
               </ul>
-            </div>
+            </div>*/}
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
-            <p>&copy; {new Date().getFullYear()} PricingGuru. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} SkillPay. All rights reserved.</p>
           </div>
         </div>
       </footer>
