@@ -1,8 +1,6 @@
 {
-  "/api/pricing-suggestion/route": "app/api/pricing-suggestion/route.js",
-  "/api/user/route": "app/api/user/route.js",
+  "/pricing/page": "app/pricing/page.js",
   "/page": "app/page.js",
   "/pricing-suggestion/page": "app/pricing-suggestion/page.js",
-  "/pricing/page": "app/pricing/page.js",
   "/auth/page": "app/auth/page.js"
 }
