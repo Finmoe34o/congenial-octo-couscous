@@ -16,8 +16,8 @@ export default function Home() {
             <Link href="/pricing-suggestion" className="nav-link font-medium">Calculator</Link>
           </nav>
           <div className="flex space-x-4">
-            <Link href="/auth" className="button-secondary">Sign In</Link>
-            <Link href="/auth?register=true" className="button-primary">Sign Up</Link>
+            <Link href="/auth/login" className="button-secondary">Sign In</Link>
+            <Link href="/auth/register" className="button-primary">Sign Up</Link>
           </div>
         </div>
       </header>
@@ -33,7 +33,7 @@ export default function Home() {
               Get data-driven pricing recommendations tailored to your skills, experience level, and target market.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-              <Link href="/auth?register=true" className="button-primary text-center py-3 px-8 text-lg">
+              <Link href="/auth/register" className="button-primary text-center py-3 px-8 text-lg">
                 Get Started
               </Link>
               {/*<Link href="/pricing" className="bg-white/10 hover:bg-white/20 text-white border border-white/30 rounded-md py-3 px-8 text-lg text-center transition-colors duration-300">
@@ -168,7 +168,7 @@ export default function Home() {
           <p className="text-lg md:text-xl mb-8 opacity-80">
             Join thousands of freelancers who are pricing their services with confidence.
           </p>
-          <Link href="/auth?register=true" className="bg-white text-indigo-600 hover:bg-gray-100 py-3 px-8 text-lg font-medium rounded-md inline-block transition-colors duration-300">
+          <Link href="/auth/register" className="bg-white text-indigo-600 hover:bg-gray-100 py-3 px-8 text-lg font-medium rounded-md inline-block transition-colors duration-300">
             Get Started For Free
           </Link>
         </div>

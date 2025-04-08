@@ -60,7 +60,7 @@ export default function PricingSuggestionPage() {
         const authToken = localStorage.getItem('authToken');
         
         if (!authToken) {
-          router.push('/auth');
+          router.push('/auth/login');
           return;
         }
         
@@ -73,7 +73,7 @@ export default function PricingSuggestionPage() {
         if (!response.ok) {
           // Redirect to login if not authenticated
           localStorage.removeItem('authToken');
-          router.push('/auth');
+          router.push('/auth/login');
           return;
         }
         
@@ -85,7 +85,7 @@ export default function PricingSuggestionPage() {
         }
       } catch (error) {
         console.error('Error checking auth:', error);
-        router.push('/auth');
+        router.push('/auth/login');
       }
     };
     

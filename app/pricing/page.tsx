@@ -27,7 +27,7 @@ export default function PricingPage() {
 
   const handleProSubscribe = async () => {
     if (!isLoggedIn) {
-      router.push('/auth?register=true');
+      router.push('/auth/login');
       return;
     }
     router.push("/checkout-page")
@@ -51,7 +51,7 @@ export default function PricingPage() {
 
   const handleBusinessSubscribe = async () => {
     if (!isLoggedIn) {
-      router.push('/auth?register=true');
+      router.push('/auth/login');
       return;
     }
     
@@ -107,7 +107,7 @@ export default function PricingPage() {
           buttonText={isLoggedIn === true ? "Current Plan" : "Get Started for Free"}
           buttonVariant="outline"
           disabled={isLoggedIn === true}
-          onClick={isLoggedIn === true ? undefined : () => router.push('/auth?register=true')}
+          onClick={isLoggedIn === true ? undefined : () => router.push('/auth/login')}
         />
 
         {/* Pro Plan */}

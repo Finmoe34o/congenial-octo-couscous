@@ -100,7 +100,6 @@ export async function POST(request: NextRequest) {
         { status: 401 }
       );
     }
-    console.log(user, "USER BLUDCLART USER")
     // Check if the user has remaining suggestions (except for business tier)
     if (user.subscription_tier !== 'business' && user.suggestions_remaining <= 0) {
       return NextResponse.json(
@@ -115,7 +114,6 @@ export async function POST(request: NextRequest) {
     // Parse and validate the request body
     const body = await request.json();
     const validationResult = pricingSuggestionSchema.safeParse(body);
-    console.log(validationResult,body)
     if (!validationResult.success) {
       return NextResponse.json(
         { error: "Invalid request data", details: validationResult.error.issues },

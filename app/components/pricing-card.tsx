@@ -43,7 +43,7 @@ export function PricingCard({
       onClick();
     } else if (!disabled) {
       // Default behavior if no onClick provided
-      router.push('/auth?register=true');
+      router.push('/auth/login');
     }
   };
 
