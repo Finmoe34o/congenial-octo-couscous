@@ -73,7 +73,7 @@ export default function Home() {
                       <p className="text-xl font-semibold">$40/hr</p>
                     </div>
                     <div className="bg-indigo-500/30 p-3 rounded">
-                      <p className="text-sm opacity-70 mb-1">Recommended</p>
+                      <p className="text-sm opacity-70 mb-1">Best</p>
                       <p className="text-xl font-semibold">$50/hr</p>
                     </div>
                     <div className="bg-white/5 p-3 rounded">
