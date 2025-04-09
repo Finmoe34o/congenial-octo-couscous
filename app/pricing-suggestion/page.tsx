@@ -584,7 +584,7 @@ export default function PricingSuggestionPage() {
             )}
           </div>
           
-          {/* Upgrade CTA for Basic Users */}
+          {/* Upgrade CTA for Basic Users
           {user.subscription_tier === 'basic' && (
             <div className="mt-12 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800 rounded-xl p-6 text-center">
               <h3 className="text-xl font-semibold mb-2">Upgrade for More Features</h3>
@@ -595,7 +595,7 @@ export default function PricingSuggestionPage() {
                 View Pricing Plans
               </Link>
             </div>
-          )}
+          )}*/}
         </div>
       </main>
     </div>
