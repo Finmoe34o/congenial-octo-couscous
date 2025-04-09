@@ -2,6 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { validateEnv } from './lib/env';
+import { Analytics } from "@vercel/analytics/react"
 
 // Validate environment variables
 validateEnv();
@@ -27,6 +28,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <main className="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 dark:from-neutral-900 dark:to-neutral-950">
           {children}
+          <Analytics />
         </main>
       </body>
     </html>
