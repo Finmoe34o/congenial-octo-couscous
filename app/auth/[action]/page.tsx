@@ -55,13 +55,18 @@ export default function AuthPage() {
   const [authError, setAuthError] = useState('');
 
   // Check if user is already logged in, redirect to home if they are
+
+
+
   useEffect(() => {
     const checkAuth = async () => {
       try {
         const response = await fetch('/api/user');
         if (response.ok) {
-          router.push('/pricing-suggestion'); // Redirect to pricing suggestion page
+          const userData = await response.json();
+          userData.subscription_tier === "basic" ? router.push("/pricing") : router.push('/pricing-suggestion'); // Redirect to pricing suggestion page
         }
+        
       } catch (error) {
         // User is not logged in, stay on auth page
       }
@@ -110,7 +115,7 @@ export default function AuthPage() {
       }
       
       // Redirect to the pricing suggestion page
-      router.push('/pricing-suggestion');
+      data.subscription_tier === "basic" ? router.push("/pricing") : router.push('/pricing-suggestion');
     } catch (error) {
       setIsLoading(false);
       
@@ -166,7 +171,7 @@ export default function AuthPage() {
       }
       
       // Redirect to the pricing suggestion page
-      router.push('/pricing-suggestion');
+      router.push('/pricing');
     } catch (error) {
       setIsLoading(false);
       
@@ -278,13 +283,13 @@ export default function AuthPage() {
               
               <div className="text-center text-sm text-gray-500 mt-4">
                 Don't have an account?{' '}
-                <button
+                <Link
+                  href="/auth/register/"
                   type="button"
-                  onClick={() => setActiveTab('register')}
                   className="text-indigo-600 hover:text-indigo-500 font-medium"
                 >
                   Sign Up
-                </button>
+                </Link>
               </div>
             </form>
           )}
@@ -354,13 +359,13 @@ export default function AuthPage() {
               
               <div className="text-center text-sm text-gray-500 mt-4">
                 Already have an account?{' '}
-                <button
+                <Link
+                  href="/auth/login/"
                   type="button"
-                  onClick={() => setActiveTab('login')}
                   className="text-indigo-600 hover:text-indigo-500 font-medium"
                 >
                   Sign In
-                </button>
+                </Link>
               </div>
             </form>
           )}

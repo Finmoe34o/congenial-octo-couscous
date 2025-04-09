@@ -1,11 +1,16 @@
 'use client';
 
+{/*{ text: "Unlimited pricing suggestions", included: false },
+            { text: "Market trend analysis", included: false },
+            { text: "Premium support", included: false },*/}
+//add back once a business tier have been added
+
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { PricingCard } from '../components/pricing-card';
 import { Button } from '../components/ui/button';
-import { ArrowLeft, BarChart2, CheckCircle, Compass, Database, Infinity, Target, Zap } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BarChart2, CheckCircle, Compass, Database, Infinity, Target, Zap } from 'lucide-react';
 
 export default function PricingPage() {
   const router = useRouter();
@@ -74,11 +79,16 @@ export default function PricingPage() {
   };
 
   return (
-    <div className="max-w-7xl text-black mx-auto px-4 py-12 sm:px-6 lg:px-8">
+    <div className="w-screen overflow-x-hidden text-black m-0 px-4 py-12 sm:px-6 lg:px-8">
       <div className="text-center mb-12">
         <Link href="/" className="inline-flex items-center text-sm text-indigo-600 hover:text-indigo-500 mb-6">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Home
+        </Link>
+        <span className="inline-flex items-center text-xl text-indigo-600 relative -top-0.5 mx-4">•</span>
+        <Link href="/pricing-suggestion" className="inline-flex relative -top-0.5 items-center text-sm text-indigo-600 hover:text-indigo-500 mb-6">
+          Go to Calculator
+          <ArrowRight className="ml-2 h-4 w-4" />
         </Link>
         <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
           <span className="block">Choose Your Plan</span>
@@ -122,10 +132,7 @@ export default function PricingPage() {
             { text: "Advanced rate calculation", included: true },
             { text: "Location-based adjustment", included: true },
             { text: "Priority email support", included: true },
-            { text: "Historical pricing data", included: true },
-            { text: "Unlimited pricing suggestions", included: false },
-            { text: "Market trend analysis", included: false },
-            { text: "Premium support", included: false },
+            { text: "Historical pricing data", included: true }
           ]}
           buttonText="Subscribe to Pro"
           onClick={handleProSubscribe}
@@ -183,12 +190,8 @@ export default function PricingPage() {
       </div>
 
       <div className="mt-20 text-center">
-        <h2 className="text-2xl font-bold mb-6">Ready to optimize your freelance pricing?</h2>
         <div className="flex justify-center space-x-4">
-          <Button onClick={() => router.push('/pricing-suggestion')} variant="default" size="lg">
-            Try Pricing Calculator
-          </Button>
-          <Button onClick={() => router.push('/')} variant="outline" size="lg">
+          <Button onClick={() => router.push('/#features')} variant="outline" size="lg">
             Learn More
           </Button>
         </div>

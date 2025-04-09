@@ -18,7 +18,7 @@ interface PricingCardProps {
   features: PricingFeature[];
   popular?: boolean;
   buttonText: string;
-  buttonVariant?: 'default' | 'outline';
+  buttonVariant?: 'ghost' | 'outline';
   disabled?: boolean;
   onClick?: () => void;
   priceDetail?: string;
@@ -31,7 +31,7 @@ export function PricingCard({
   features,
   popular = false,
   buttonText,
-  buttonVariant = 'default',
+  buttonVariant = title === "Pro" || title === "Business" ? "outline" : "ghost",
   disabled = false,
   onClick,
   priceDetail
@@ -50,9 +50,9 @@ export function PricingCard({
   return (
     <Card className={`w-full max-w-sm mx-auto ${popular ? 'border-primary shadow-lg' : ''}`}>
       {popular && (
-        <div className="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/2">
-          <span className="bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full">
-            Popular
+        <div className="relative top-[9px] text-indigo-600 left-[45%] transform translate-x-1/4 -translate-y-1/2">
+          <span className="bg-primary text-primary-foreground text-sm font-bold px-3 py-1 rounded-full">
+            Most Popular
           </span>
         </div>
       )}
@@ -60,7 +60,7 @@ export function PricingCard({
       <CardHeader className="text-center">
         <CardTitle className="text-2xl">{title}</CardTitle>
         <div className="mt-3 flex justify-center items-baseline">
-          <span className="text-4xl font-extrabold tracking-tight">{price}</span>
+          <span className="text-4xl font-semibold tracking-tight">{price !=="Free" ? `Only ${price}` : price}</span>
           {priceDetail && <span className="ml-1 text-sm text-muted-foreground">{priceDetail}</span>}
         </div>
         <CardDescription className="mt-2">{description}</CardDescription>
@@ -85,7 +85,7 @@ export function PricingCard({
         <Button 
           onClick={handleClick}
           variant={buttonVariant}
-          className="w-full" 
+          className=" w-full" 
           disabled={disabled}
         >
           {buttonText}

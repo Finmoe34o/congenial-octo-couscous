@@ -13,8 +13,8 @@ export default function Home() {
   const amount = 4.99;
 
   return (
-    <main className="max-w-6xl mx-auto p-10 text-white text-center border m-10 rounded-md bg-gradient-to-tr from-blue-500 to-purple-500">
-      <div className="mb-10">
+    <main className="w-[100vw] sm:px-24 mx-auto overflow-x-hidden p-2 sm:p-10 text-white text-center border rounded-md bg-gradient-to-tr from-blue-600 to-purple-600">
+      <div className="mb-14">
         <h1 className="text-4xl font-extrabold mb-2">Business Tier</h1>
         <h2 className="text-2xl">
           <span className="font-bold"> £{amount}</span>
