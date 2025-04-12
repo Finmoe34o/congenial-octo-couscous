@@ -60,7 +60,7 @@ export default function PricingPage() {
       return;
     }
     
-    try {
+    /*try {
       const response = await fetch('/api/create-business-subscription', {
         method: 'POST',
         headers: {
@@ -75,7 +75,7 @@ export default function PricingPage() {
       }
     } catch (error) {
       console.error('Error creating subscription:', error);
-    }
+    }*/
   };
 
   return (

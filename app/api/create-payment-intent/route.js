@@ -6,12 +6,16 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(request) {
   try {
-    const { amount } = await request.json();
+    const { email } = await request.json();
+    const customer = await stripe.customers.create({ email });
 
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount,
-      currency: "gbp",
-      automatic_payment_methods: { enabled: true },
+    const subscription = await stripe.subscriptions.create({
+      customer: customer.id,
+      items: [
+        {
+          price: process.env.PRICE_ID,
+        },
+      ],
     });
 
     return NextResponse.json({ clientSecret: paymentIntent.client_secret });
